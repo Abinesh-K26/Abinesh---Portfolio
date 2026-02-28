@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio | Abinesh</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Custom Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #006039; /* Rolex Green */
+      color: #006039;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      overflow-x: hidden;
+    }
+    body::-webkit-scrollbar {
+      display: none;
+    }
+    
+    ::selection {
+      background-color: #ccff00; /* Tennis Ball Green */
+      color: #006039;
+    }
+
+    #app {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    /* Navbar scroll invert styles */
+    .nav-inverted {
+      color: #006039 !important;
+    }
+    .nav-inverted .nav-accent {
+      color: #006039 !important;
+    }
+
+    /* Marquee Typography - Helvetica Medium Aesthetic */
+    .marquee-text {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 500; /* Medium */
+      font-size: 24vw;
+      line-height: 0.8;
+      letter-spacing: -0.04em;
+      color: rgba(255, 255, 255, 1);
+      text-transform: uppercase;
+    }
+
+    /* Floating Image Modal */
+    #work-modal {
+      transition: transform 0.1s ease-out;
+      will-change: transform, left, top;
+    }
+  </style>
+</head>
+<body class="selection:bg-[#ccff00] selection:text-[#006039]">
+
+  <!-- Loading Screen -->
+  <div id="loader" class="fixed inset-0 z-[99999] bg-[#006039] flex items-center justify-center text-[#ccff00] transition-opacity duration-500">
+    <div class="text-xl tracking-widest uppercase animate-pulse font-medium">Loading Experience...</div>
+  </div>
+
+  <!-- Custom Cursor -->
+  <div id="cursor" class="fixed top-0 left-0 w-3 h-3 bg-[#ccff00] rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 hidden md:block"></div>
+
+  <!-- Main Application Wrapper -->
+  <div id="app" class="min-h-screen">
+    
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full py-8 z-50 text-white transition-colors duration-500">
+      <div class="max-w-[1600px] mx-auto px-6 md:px-10 grid grid-cols-4 md:grid-cols-12 items-start">
+        <div class="col-span-2 md:col-span-3 group cursor-pointer flex items-center gap-2 font-medium">
+          <div class="magnetic">
+            <div class="nav-accent relative overflow-hidden w-40 h-6 flex flex-col justify-center text-[#ccff00] transition-colors duration-500">
+              <div class="absolute top-0 left-0 w-full h-full flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-y-1/2">
+                <span class="h-20 flex items-center">© Abinesh 2026</span>
+  
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-span-2 md:col-span-9 flex justify-end items-center relative">
+          <!-- Desktop Menu -->
+          <div id="desktop-menu" class="hidden md:flex gap-10 font-medium">
+            <div class="magnetic"><a href="#work" class="nav-link hover:text-[#ccff00] transition-colors">Work</a></div>
+            <div class="magnetic"><a href="#about" class="nav-link hover:text-[#ccff00] transition-colors">About</a></div>
+            <div class="magnetic"><a href="#contact" class="nav-link hover:text-[#ccff00] transition-colors">Contact</a></div>
+          </div>
+          <!-- Hamburger -->
+          <div id="hamburger-btn" class="nav-accent flex text-[#ccff00] md:hidden cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="relative z-10 bg-[#006039]">
+      
+      <!-- Hero Section -->
+      <section class="h-screen relative overflow-hidden bg-[#006039] flex flex-col justify-end">
+        
+        <!-- Layer 1: Hero Portrait (Background) -->
+        <div class="absolute inset-0 z-10 pointer-events-none flex items-end justify-center">
+          <img 
+            id="hero-image"
+            src="https://i.ibb.co/KxGswnbv/Layer-3.png" 
+            alt="Portrait" 
+            class="w-auto h-auto max-h-[85vh] md:max-h-[95vh] object-contain object-bottom origin-bottom"
+          />
+        </div>
+
+        <!-- Layer 2: Marquee (Foreground Overlay - Helvetica Medium) -->
+        <div class="absolute bottom-[5%] w-full flex overflow-hidden z-30 pointer-events-none">
+          <div id="marquee-slider" class="relative flex whitespace-nowrap">
+            <div class="flex marquee-text">
+              <span class="pr-20">Abinesh Kumar — </span>
+            </div>
+            <div class="flex marquee-text absolute left-full top-0">
+              <span class="pr-20">Abinesh Kumar — </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Layer 3: UI Elements (Foreground Top) -->
+        
+        <!-- Location Pill (Left Edge) -->
+        <div class="absolute left-0 top-[50%] -translate-y-1/2 z-40 flex items-center gap-5 bg-[#0e0e0e] rounded-r-full py-2.5 pl-8 pr-2.5 shadow-2xl border border-white/5 border-l-0 transition-transform duration-700 hover:translate-x-2">
+          <p class="leading-tight text-xs md:text-sm font-medium m-0 text-white opacity-90">Located in <br /> Bengaluru, India</p>
+          <div class="bg-[#1e1e1e] w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center shrink-0 border border-white/10">
+            <svg class="text-[#ccff00] w-6 h-6 md:w-8 md:h-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+          </div>
+        </div>
+
+        <!-- Freelance Designer Text (Right Edge) -->
+        <div class="absolute right-0 top-[50%] -translate-y-1/2 z-40 flex flex-col items-end gap-5 px-6 md:px-12 pointer-events-none">
+          <svg class="text-[#ccff00] w-6 h-6 md:w-8 md:h-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="7" x2="17" y2="17"/><polyline points="17 7 17 17 7 17"/></svg>
+          <p class="leading-tight text-lg md:text-xl font-medium m-0 text-white tracking-tight text-right opacity-90">Visual Designer <br /> Unreal Developer</p>
+        </div>
+
+      </section>
+
+      <!-- About Section -->
+      <section id="about" class="py-32 md:py-48 bg-white text-[#006039] relative z-[50]">
+        <div class="max-w-[1600px] mx-auto px-6 md:px-10">
+          <div class="grid grid-cols-4 md:grid-cols-12 gap-12">
+            <div class="col-span-4 md:col-span-8">
+              <p id="about-text" class="text-3xl md:text-5xl lg:text-[3.5rem] leading-[1.1] font-medium tracking-tight">
+                Helping brands to stand out in the digital era. Together we will set the new status quo. No nonsense, always on the edge.
+              </p>
+            </div>
+            <div class="col-span-4 md:col-span-3 md:col-start-10 flex flex-col justify-between items-start">
+              <p class="text-lg opacity-80 leading-relaxed">
+                The combination of my passion for design, code & interaction positions me in a unique place in the web design world.
+              </p>
+              <div class="magnetic mt-12">
+                <button class="bg-[#006039] text-white w-40 h-40 rounded-full flex items-center justify-center font-medium hover:bg-[#ccff00] hover:text-[#006039] transition-all duration-300 shadow-2xl text-xl uppercase tracking-tighter">
+                  About me
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Work Section -->
+      <section id="work" class="bg-white py-32 relative z-[50]">
+        
+        <!-- Floating Image Modal -->
+        <div id="work-modal" class="fixed top-0 left-0 w-[300px] h-[350px] pointer-events-none z-[100] overflow-hidden hidden md:block scale-0 opacity-0 rounded-lg">
+          <div id="work-modal-images" class="w-full h-full relative flex flex-col">
+            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover shrink-0" alt="TWICE"/>
+            <img src="https://images.unsplash.com/photo-1605106702734-205df224ecce?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover shrink-0" alt="THE SILO"/>
+            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover shrink-0" alt="KINESIS"/>
+            <img src="https://images.unsplash.com/photo-1511447333015-45b65e60f6d5?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover shrink-0" alt="BASE CAMP"/>
+          </div>
+        </div>
+
+        <div class="max-w-[1600px] mx-auto px-6 md:px-10 border-t border-gray-100">
+           <div class="grid grid-cols-12 py-6 text-xs uppercase tracking-widest text-gray-400 font-bold">
+             <div class="col-span-2">Year</div>
+             <div class="col-span-6">Project</div>
+             <div class="col-span-4 text-right">Role</div>
+           </div>
+           
+           <!-- Row 1 -->
+           <div class="work-row group border-t border-gray-100 py-16 cursor-pointer relative overflow-hidden transition-colors hover:text-white" data-index="0">
+             <div class="absolute inset-0 bg-[#006039] -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]"></div>
+             <div class="relative z-10 grid grid-cols-12 items-center px-4">
+               <div class="col-span-2 text-xl opacity-50 group-hover:opacity-100">2025</div>
+               <div class="col-span-6 text-5xl md:text-8xl font-medium tracking-tighter uppercase">TWICE</div>
+               <div class="col-span-4 text-right text-xl opacity-50 group-hover:opacity-100">Design & Dev</div>
+             </div>
+           </div>
+
+           <!-- Row 2 -->
+           <div class="work-row group border-t border-gray-100 py-16 cursor-pointer relative overflow-hidden transition-colors hover:text-white" data-index="1">
+             <div class="absolute inset-0 bg-[#006039] -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]"></div>
+             <div class="relative z-10 grid grid-cols-12 items-center px-4">
+               <div class="col-span-2 text-xl opacity-50 group-hover:opacity-100">2024</div>
+               <div class="col-span-6 text-5xl md:text-8xl font-medium tracking-tighter uppercase">THE SILO</div>
+               <div class="col-span-4 text-right text-xl opacity-50 group-hover:opacity-100">Interaction</div>
+             </div>
+           </div>
+
+           <!-- Row 3 -->
+           <div class="work-row group border-t border-gray-100 py-16 cursor-pointer relative overflow-hidden transition-colors hover:text-white" data-index="2">
+             <div class="absolute inset-0 bg-[#006039] -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]"></div>
+             <div class="relative z-10 grid grid-cols-12 items-center px-4">
+               <div class="col-span-2 text-xl opacity-50 group-hover:opacity-100">2024</div>
+               <div class="col-span-6 text-5xl md:text-8xl font-medium tracking-tighter uppercase">KINESIS</div>
+               <div class="col-span-4 text-right text-xl opacity-50 group-hover:opacity-100">Design</div>
+             </div>
+           </div>
+
+           <!-- Row 4 -->
+           <div class="work-row group border-t border-gray-100 py-16 cursor-pointer relative overflow-hidden transition-colors hover:text-white" data-index="3">
+             <div class="absolute inset-0 bg-[#006039] -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]"></div>
+             <div class="relative z-10 grid grid-cols-12 items-center px-4">
+               <div class="col-span-2 text-xl opacity-50 group-hover:opacity-100">2023</div>
+               <div class="col-span-6 text-5xl md:text-8xl font-medium tracking-tighter uppercase">BASE CAMP</div>
+               <div class="col-span-4 text-right text-xl opacity-50 group-hover:opacity-100">Development</div>
+             </div>
+           </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-[#006039] text-white min-h-screen flex flex-col justify-between pt-32 pb-10 sticky bottom-0 z-0">
+      <div class="max-w-[1600px] mx-auto w-full px-6 md:px-10">
+        <h2 class="text-[12vw] font-medium tracking-tighter uppercase leading-[0.8]">Let's work</h2>
+        <h2 class="text-[12vw] font-medium tracking-tighter uppercase leading-[0.8] text-[#ccff00] ml-28">together</h2>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+
+  <script>
+    window.addEventListener("load", () => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      const lenis = new Lenis({ duration: 1.2, smooth: true });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+
+      // Handle Splash
+      setTimeout(() => {
+        document.getElementById('loader').style.opacity = '0';
+        setTimeout(() => {
+          document.getElementById('loader').style.display = 'none';
+          document.getElementById('app').style.opacity = '1';
+          initAnimations();
+        }, 500);
+      }, 800);
+
+      function initAnimations() {
+        // Cursor
+        const cursor = document.getElementById('cursor');
+        window.addEventListener("mousemove", (e) => {
+          gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1, ease: "power2" });
+        });
+
+        // Marquee
+        const slider = document.getElementById('marquee-slider');
+        let xPercent = 0;
+        function animateMarquee() {
+          if (xPercent < -100) xPercent = 0;
+          gsap.set(slider, { xPercent: xPercent });
+          xPercent -= 0.05;
+          requestAnimationFrame(animateMarquee);
+        }
+        requestAnimationFrame(animateMarquee);
+
+        // Parallax Portrait
+        gsap.to("#hero-image", {
+          yPercent: 10,
+          scale: 1.05,
+          ease: "none",
+          scrollTrigger: {
+            trigger: "body",
+            start: "top top",
+            end: "bottom top",
+            scrub: true
+          }
+        });
+
+        // Work Modal Logic
+        const workModal = document.getElementById('work-modal');
+        const modalImages = document.getElementById('work-modal-images');
+        const workRows = document.querySelectorAll('.work-row');
+        
+        if (workModal && !window.matchMedia("(hover: none)").matches) {
+          const mXTo = gsap.quickTo(workModal, "left", { duration: 0.6, ease: "power3" });
+          const mYTo = gsap.quickTo(workModal, "top", { duration: 0.6, ease: "power3" });
+
+          window.addEventListener("mousemove", (e) => {
+            mXTo(e.clientX - 150);
+            mYTo(e.clientY - 175);
+          });
+
+          workRows.forEach(row => {
+            row.addEventListener("mouseenter", () => {
+              const index = row.getAttribute('data-index');
+              gsap.to(workModal, { scale: 1, autoAlpha: 1, duration: 0.4, ease: "power3.out" });
+              gsap.to(modalImages, { yPercent: -100 * index, duration: 0.4, ease: "power3.inOut" });
+            });
+            row.addEventListener("mouseleave", () => {
+              gsap.to(workModal, { scale: 0, autoAlpha: 0, duration: 0.4, ease: "power3.in" });
+            });
+          });
+        }
+
+        // Navbar Color Swapping
+        ScrollTrigger.create({
+          trigger: "#about",
+          start: "top 60px",
+          endTrigger: "main",
+          end: "bottom 60px",
+          toggleClass: { targets: "#navbar", className: "nav-inverted" }
+        });
+
+        // Magnetic Effect
+        document.querySelectorAll('.magnetic').forEach(el => {
+          el.addEventListener('mousemove', (e) => {
+            const rect = el.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            gsap.to(el, { x: x * 0.4, y: y * 0.4, duration: 1, ease: "elastic.out(1, 0.3)" });
+          });
+          el.addEventListener('mouseleave', () => {
+            gsap.to(el, { x: 0, y: 0, duration: 1, ease: "elastic.out(1, 0.3)" });
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
