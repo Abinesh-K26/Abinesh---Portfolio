@@ -48,17 +48,25 @@
     .marquee-text {
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-weight: 500; /* Medium */
-      font-size: 10vw;
+      font-size: 24vw;
       line-height: 0.8;
       letter-spacing: -0.04em;
       color: rgba(255, 255, 255, 1);
-      text-transform: capitalize;
+      text-transform: uppercase;
     }
 
     /* Floating Image Modal */
     #work-modal {
       transition: transform 0.1s ease-out;
       will-change: transform, left, top;
+    }
+
+    /* Football Pitch Path Initial State */
+    .pitch-line {
+      /* Large dasharray to cover the perimeter of the 960x560 boundary */
+      stroke-dasharray: 3200;
+      stroke-dashoffset: 3200;
+      opacity: 0.15;
     }
   </style>
 </head>
@@ -83,7 +91,6 @@
             <div class="nav-accent relative overflow-hidden w-40 h-6 flex flex-col justify-center text-[#ccff00] transition-colors duration-500">
               <div class="absolute top-0 left-0 w-full h-full flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-y-1/2">
                 <span class="h-20 flex items-center">© Abinesh 2026</span>
-  
               </div>
             </div>
           </div>
@@ -110,6 +117,26 @@
       <!-- Hero Section -->
       <section class="h-screen relative overflow-hidden bg-[#006039] flex flex-col justify-end">
         
+        <!-- Layer 0: Football Pitch Background -->
+        <div id="pitch-container" class="absolute inset-0 z-0 flex items-center justify-center opacity-40 pointer-events-none scale-110 md:scale-100">
+          <svg width="80%" height="80%" viewBox="0 0 1000 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Boundary -->
+            <rect class="pitch-line" x="20" y="20" width="960" height="560" stroke="#ccff00" stroke-width="2"/>
+            <!-- Halfway Line -->
+            <line class="pitch-line" x1="500" y1="20" x2="500" y2="580" stroke="#ccff00" stroke-width="2"/>
+            <!-- Center Circle -->
+            <circle class="pitch-line" cx="500" cy="300" r="70" stroke="#ccff00" stroke-width="2"/>
+            <!-- Left Penalty Area -->
+            <rect class="pitch-line" x="20" y="140" width="160" height="320" stroke="#ccff00" stroke-width="2"/>
+            <rect class="pitch-line" x="20" y="220" width="60" height="160" stroke="#ccff00" stroke-width="2"/>
+            <path class="pitch-line" d="M 180 250 A 70 70 0 0 1 180 350" stroke="#ccff00" stroke-width="2"/>
+            <!-- Right Penalty Area -->
+            <rect class="pitch-line" x="820" y="140" width="160" height="320" stroke="#ccff00" stroke-width="2"/>
+            <rect class="pitch-line" x="920" y="220" width="60" height="160" stroke="#ccff00" stroke-width="2"/>
+            <path class="pitch-line" d="M 820 250 A 70 70 0 0 0 820 350" stroke="#ccff00" stroke-width="2"/>
+          </svg>
+        </div>
+
         <!-- Layer 1: Hero Portrait (Background) -->
         <div class="absolute inset-0 z-10 pointer-events-none flex items-end justify-center">
           <img 
@@ -120,7 +147,7 @@
           />
         </div>
 
-        <!-- Layer 2: Marquee (Foreground Overlay - Helvetica Medium) -->
+        <!-- Layer 2: Marquee (Foreground Overlay) -->
         <div class="absolute bottom-[5%] w-full flex overflow-hidden z-30 pointer-events-none">
           <div id="marquee-slider" class="relative flex whitespace-nowrap">
             <div class="flex marquee-text">
@@ -193,7 +220,6 @@
              <div class="col-span-4 text-right">Role</div>
            </div>
            
-           <!-- Row 1 -->
            <div class="work-row group border-t border-gray-100 py-16 cursor-pointer relative overflow-hidden transition-colors hover:text-white" data-index="0">
              <div class="absolute inset-0 bg-[#006039] -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]"></div>
              <div class="relative z-10 grid grid-cols-12 items-center px-4">
@@ -203,7 +229,6 @@
              </div>
            </div>
 
-           <!-- Row 2 -->
            <div class="work-row group border-t border-gray-100 py-16 cursor-pointer relative overflow-hidden transition-colors hover:text-white" data-index="1">
              <div class="absolute inset-0 bg-[#006039] -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]"></div>
              <div class="relative z-10 grid grid-cols-12 items-center px-4">
@@ -213,7 +238,6 @@
              </div>
            </div>
 
-           <!-- Row 3 -->
            <div class="work-row group border-t border-gray-100 py-16 cursor-pointer relative overflow-hidden transition-colors hover:text-white" data-index="2">
              <div class="absolute inset-0 bg-[#006039] -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]"></div>
              <div class="relative z-10 grid grid-cols-12 items-center px-4">
@@ -223,7 +247,6 @@
              </div>
            </div>
 
-           <!-- Row 4 -->
            <div class="work-row group border-t border-gray-100 py-16 cursor-pointer relative overflow-hidden transition-colors hover:text-white" data-index="3">
              <div class="absolute inset-0 bg-[#006039] -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]"></div>
              <div class="relative z-10 grid grid-cols-12 items-center px-4">
@@ -273,6 +296,41 @@
         const cursor = document.getElementById('cursor');
         window.addEventListener("mousemove", (e) => {
           gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1, ease: "power2" });
+        });
+
+        // Football Pitch Loop: Draw, Erase, Repeat
+        const pitchLines = document.querySelectorAll('.pitch-line');
+        if (pitchLines.length > 0) {
+          gsap.timeline({ repeat: -1 })
+            // Draw Phase
+            .to(".pitch-line", { 
+              strokeDashoffset: 0, 
+              duration: 4, 
+              ease: "power2.inOut", 
+              stagger: 0.1 
+            })
+            // Hold drawn
+            .to({}, { duration: 3 })
+            // Erase Phase
+            .to(".pitch-line", { 
+              strokeDashoffset: 3200, 
+              duration: 3, 
+              ease: "power2.inOut", 
+              stagger: { each: 0.1, from: "end" } 
+            })
+            // Hold erased
+            .to({}, { duration: 1.5 });
+        }
+
+        // Floating Motion for the pitch container
+        gsap.to("#pitch-container", {
+          x: "random(-20, 20)",
+          y: "random(-20, 20)",
+          rotation: "random(-0.5, 0.5)",
+          duration: 15,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut"
         });
 
         // Marquee
@@ -350,7 +408,4 @@
     });
   </script>
 </body>
-
 </html>
-
-
